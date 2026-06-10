@@ -10,11 +10,13 @@ load_dotenv(os.path.join(_here, ".env"), override=True)
 
 from backend.database import init_db
 from backend.routers import auth, users, predictions, admin
+from backend.services.ml_service import auto_train_if_needed
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     init_db()
+    auto_train_if_needed()
     yield
 
 
@@ -36,7 +38,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-_static_dir = os.path.join(os.path.dirname(__file__), "static")
+_static_dir = os.getenv("STATIC_ROOT", os.path.join(os.path.dirname(__file__), "static"))
 os.makedirs(_static_dir, exist_ok=True)
 app.mount("/static", StaticFiles(directory=_static_dir), name="static")
 

@@ -7,7 +7,7 @@ from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "..", "hpv_model.pkl")
+MODEL_PATH = os.getenv("MODEL_PATH", os.path.join(os.path.dirname(__file__), "..", "hpv_model.pkl"))
 
 TOP_GENES = [
     "CXCL8", "CXCL10", "CCL20", "IFIT1", "MX1", "OAS1", "ISG15", "RSAD2",
@@ -108,6 +108,18 @@ class VirusDetector:
 
 
 detector = VirusDetector()
+
+_SEED_CSV = os.path.join(os.path.dirname(__file__), "..", "seed_training.csv")
+
+
+def auto_train_if_needed():
+    if detector.is_trained():
+        return
+    if not os.path.exists(_SEED_CSV):
+        return
+    with open(_SEED_CSV, "rb") as f:
+        result = detector.train_model(f.read())
+    print(f"[HPV DetectAI] Auto-trained from seed data — {result['samples']} samples, accuracy {result['accuracy']}%")
 
 
 def get_risk(confidence: float) -> tuple[str, str]:

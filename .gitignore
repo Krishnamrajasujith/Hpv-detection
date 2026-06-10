@@ -1,0 +1,49 @@
+# IDE / tooling
+.claude/
+
+# Environment secrets
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+venv/
+.venv/
+env/
+
+# Database
+*.db
+*.sqlite3
+local.db
+
+# ML model (large binary — regenerate by training)
+backend/hpv_model.pkl
+
+# Node
+node_modules/
+frontend/node_modules/
+
+# Build output
+frontend/dist/
+
+# Static generated files
+backend/static/heatmaps/
+backend/static/reports/
+backend/static/qr/
+
+# Generated datasets
+training_data.csv
+training_data_v2.csv
+
+# Logs / temp
+*.log
+__pycache__/
+.DS_Store
+Thumbs.db

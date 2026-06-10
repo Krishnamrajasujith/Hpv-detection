@@ -4,10 +4,9 @@ import Layout from '../components/Layout'
 import FileDropzone from '../components/FileDropzone'
 import { riskBadge, resultBadge } from '../components/Badge'
 import api from '../lib/api'
-import { useAuthStore } from '../store/authStore'
 
 export default function DashboardPage() {
-  const user = useAuthStore((s) => s.user)
+
   const [trained, setTrained] = useState(false)
   const [trainFile, setTrainFile] = useState<File | null>(null)
   const [training, setTraining] = useState(false)
